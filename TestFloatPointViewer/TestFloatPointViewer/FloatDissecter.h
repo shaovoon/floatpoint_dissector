@@ -244,6 +244,16 @@ public:
 		return (raw_exponent == MaxRawExponent) && (mantissa > U_ZERO);
 	}
 
+	void SetNaN(Sign new_sign, UINT_TYPE non_zero_mantissa)
+	{
+		INT_TYPE adjusted_exponent = INT_TYPE(MaxRawExponent - ExponentBias);
+		if (non_zero_mantissa == U_ZERO)
+			non_zero_mantissa = U_ONE;
+		UINT_TYPE mantissa = non_zero_mantissa & MantissaBits;
+
+		Set(m_FValue, new_sign, adjusted_exponent, mantissa);
+	}
+
 	std::string Convert2Binary(UINT_TYPE value, int num_of_bits)
 	{
 		std::string str = "";

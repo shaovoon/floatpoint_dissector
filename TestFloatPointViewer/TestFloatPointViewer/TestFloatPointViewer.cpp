@@ -8,20 +8,16 @@
 int main()
 {
     FloatDissecter::FLOAT_TYPE value = 0.0f;
-    FloatDissecter d(-1.0/value);
+    FloatDissecter d(value);
 
-    //d.Display();
-
-    //d.SetSign(DoubleDissecter::Sign::Negative);
-    //d.SetMantissa(1);
-
-	//d.Display();
+	d.SetNaN(FloatDissecter::Sign::Positive, 2);
 
 	std::cout << "IsNaN:" << d.IsNaN() << "\n";
 	std::cout << "IsZero:" << d.IsZero() << "\n";
 	std::cout << "IsInfinity:" << d.IsInfinity() << "\n";
 	std::cout << "IsPositiveInfinity:" << d.IsPositiveInfinity() << "\n";
 	std::cout << "IsNegativeInfinity:" << d.IsNegativeInfinity() << "\n";
+	std::cout << "IsNaN:" << std::isnan(d.GetFloatPoint()) << "\n";
 
     std::cout << "Done\n";
 }

@@ -249,6 +249,16 @@ namespace TestFloatPointViewerCSharp
             return (raw_exponent == MaxRawExponent) && (mantissa > U_ZERO);
         }
 
+        public void SetNaN(Sign new_sign, UINT_TYPE non_zero_mantissa)
+        {
+            INT_TYPE adjusted_exponent = (INT_TYPE)(MaxRawExponent - ExponentBias);
+            if (non_zero_mantissa == U_ZERO)
+                non_zero_mantissa = U_ONE;
+            UINT_TYPE mantissa = non_zero_mantissa & MantissaBits;
+
+            Set(out m_FValue, new_sign, adjusted_exponent, mantissa);
+        }
+
         private string Convert2Binary(UINT_TYPE value, byte num_of_bits)
         {
             string str = "";
