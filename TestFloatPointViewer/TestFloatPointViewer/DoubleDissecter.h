@@ -27,6 +27,9 @@ private:
 	static constexpr UINT_TYPE U_ZERO = 0UL;
 	static constexpr INT_TYPE S_ZERO = 0L;
 	static constexpr UINT_TYPE U_ONE = 1UL;
+
+	static constexpr UINT_TYPE MaxRawExponent = 2047U;
+
 	union UnionType
 	{
 		FLOAT_TYPE f_val;
@@ -158,6 +161,88 @@ public:
 		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
 		Set(m_FValue, sign, adjusted_exponent, new_mantissa);
+	}
+
+	bool IsInfinity() const
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == MaxRawExponent) && (mantissa == U_ZERO);
+	}
+
+	void SetInfinity(Sign new_sign)
+	{
+		INT_TYPE adjusted_exponent = (INT_TYPE)MaxRawExponent - (INT_TYPE)ExponentBias;
+		UINT_TYPE mantissa = U_ZERO;
+
+		Set(m_FValue, new_sign, adjusted_exponent, mantissa);
+	}
+
+	bool IsPositiveInfinity() const
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == MaxRawExponent) && (sign == Sign::Positive) && (mantissa == U_ZERO);
+	}
+
+	bool IsNegativeInfinity() const
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == MaxRawExponent) && (sign == Sign::Negative) && (mantissa == U_ZERO);
+	}
+
+	bool IsDenormalised() const
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == U_ZERO) && (mantissa > U_ZERO);
+	}
+
+	bool IsZero() const 
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == U_ZERO) && (mantissa == U_ZERO); // zero can be positive or negative depending on the sign.
+	}
+
+	void SetZero(Sign new_sign)
+	{
+		INT_TYPE adjusted_exponent = -(INT_TYPE)ExponentBias;
+		UINT_TYPE mantissa = U_ZERO;
+
+		Set(m_FValue, new_sign, adjusted_exponent, mantissa);
+	}
+
+	bool IsNaN() const
+	{
+		Sign sign = Sign::Positive;
+		UINT_TYPE raw_exponent = U_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
+		UINT_TYPE mantissa = U_ZERO;
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+
+		return (raw_exponent == MaxRawExponent) && (mantissa > U_ZERO);
 	}
 
 	std::string Convert2Binary(UINT_TYPE value, int num_of_bits)

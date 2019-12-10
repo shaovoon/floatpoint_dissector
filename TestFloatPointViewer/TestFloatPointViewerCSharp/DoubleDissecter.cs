@@ -25,6 +25,8 @@ namespace TestFloatPointViewerCSharp
         private static readonly INT_TYPE S_ZERO = 0L;
         private static readonly UINT_TYPE U_ONE = 1UL;
         private static readonly FLOAT_TYPE F_ZERO = 0.0;
+        private static readonly UINT_TYPE MaxRawExponent = 2047U;
+
         private FLOAT_TYPE m_FValue;
 
 
@@ -163,6 +165,88 @@ namespace TestFloatPointViewerCSharp
             Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
             Set(out m_FValue, sign, adjusted_exponent, new_mantissa);
+        }
+
+        public bool IsInfinity()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == MaxRawExponent) && (mantissa == U_ZERO);
+        }
+
+        public void SetInfinity(Sign new_sign)
+        {
+            INT_TYPE adjusted_exponent = (INT_TYPE)MaxRawExponent - (INT_TYPE)ExponentBias;
+            UINT_TYPE mantissa = U_ZERO;
+
+            Set(out m_FValue, new_sign, adjusted_exponent, mantissa);
+        }
+
+        public bool IsPositiveInfinity()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == MaxRawExponent) && (sign == Sign.Positive) && (mantissa == U_ZERO);
+        }
+
+        public bool IsNegativeInfinity()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == MaxRawExponent) && (sign == Sign.Negative) && (mantissa == U_ZERO);
+        }
+
+        public bool IsDenormalised()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == U_ZERO) && (mantissa > U_ZERO);
+        }
+
+        public bool IsZero()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == U_ZERO) && (mantissa == U_ZERO); // zero can be positive or negative depending on the sign.
+        }
+
+        public void SetZero(Sign new_sign)
+        {
+            INT_TYPE adjusted_exponent = -(INT_TYPE)ExponentBias;
+            UINT_TYPE mantissa = U_ZERO;
+
+            Set(out m_FValue, new_sign, adjusted_exponent, mantissa);
+        }
+
+        public bool IsNaN()
+        {
+            Sign sign = Sign.Positive;
+            UINT_TYPE raw_exponent = U_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
+            UINT_TYPE mantissa = U_ZERO;
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+
+            return (raw_exponent == MaxRawExponent) && (mantissa > U_ZERO);
         }
 
         private string Convert2Binary(UINT_TYPE value, byte num_of_bits)
