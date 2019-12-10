@@ -22,7 +22,7 @@ private:
 	static constexpr UINT_TYPE SignBit = 0x8000000000000000; // MSB is sign bit
 	static constexpr UINT_TYPE ExponentBits = 0x7FF0000000000000; // 11 bits of exponent
 	static constexpr UINT_TYPE MantissaBits = 0xFFFFFFFFFFFFF; // 52 bits of mantissa
-	static constexpr UINT_TYPE ExponentShift = 52UL;
+	static constexpr UINT_TYPE NumMantissaBits = 52UL;
 	static constexpr UINT_TYPE ExponentBias = 1023UL;
 	static constexpr UINT_TYPE U_ZERO = 0UL;
 	static constexpr INT_TYPE S_ZERO = 0L;
@@ -52,8 +52,8 @@ public:
 		UnionType u;
 		u.f_val = src;
 		sign = (u.ui_val & SignBit) ? Sign::Negative : Sign::Positive;
-		raw_exponent = (u.ui_val & ExponentBits) >> ExponentShift;
-		adjusted_exponent = raw_exponent - ExponentBias;
+		raw_exponent = (u.ui_val & ExponentBits) >> NumMantissaBits;
+		adjusted_exponent = (INT_TYPE)(raw_exponent)-(INT_TYPE)(ExponentBias);
 		mantissa = (u.ui_val & MantissaBits);
 	}
 
@@ -66,7 +66,7 @@ public:
 		UINT_TYPE raw_exponent = (adjusted_exponent + ExponentBias);
 		UINT_TYPE new_man = mantissa & MantissaBits;
 		UnionType u;
-		u.ui_val = sign_value | (raw_exponent << ExponentShift) | (mantissa & MantissaBits);
+		u.ui_val = sign_value | (raw_exponent << NumMantissaBits) | (mantissa & MantissaBits);
 
 		dest = u.f_val;
 	}
@@ -186,7 +186,7 @@ public:
 
 		std::cout << "Sign:" << (sign == Sign::Negative) << ", ";
 		std::cout << "Adjusted Exponent:" << adjusted_exponent << ", ";
-		std::cout << "Mantissa:" << Convert2Binary(mantissa, ExponentShift) << ", ";
+		std::cout << "Mantissa:" << Convert2Binary(mantissa, NumMantissaBits) << ", ";
 		std::cout << "Float Point Value:" << std::setprecision(15) << m_FValue << "\n";
 	}
 

@@ -20,7 +20,7 @@ namespace TestFloatPointViewerCSharp
         private static readonly UINT_TYPE SignBit = 0x80000000; // MSB is sign bit
         private static readonly UINT_TYPE ExponentBits = 0x7F800000; // 8 bits of exponent
         private static readonly UINT_TYPE MantissaBits = 0x7FFFFF; // 23 bits of mantissa
-        private static readonly byte ExponentShift = 23;
+        private static readonly byte NumMantissaBits = 23;
         private static readonly UINT_TYPE ExponentBias = 127U;
         private static readonly UINT_TYPE U_ZERO = 0U;
         private static readonly INT_TYPE S_ZERO = 0;
@@ -57,7 +57,7 @@ namespace TestFloatPointViewerCSharp
             u.ui_val = 0; // to silence the compiler of unassigned ui_val member
             u.f_val = src;
             sign = ((u.ui_val & SignBit) > 0) ? Sign.Negative : Sign.Positive;
-            raw_exponent = (u.ui_val & ExponentBits) >> ExponentShift;
+            raw_exponent = (u.ui_val & ExponentBits) >> NumMantissaBits;
             adjusted_exponent = (INT_TYPE)raw_exponent - (INT_TYPE)ExponentBias;
             mantissa = (u.ui_val & MantissaBits);
         }
@@ -71,7 +71,7 @@ namespace TestFloatPointViewerCSharp
             UINT_TYPE raw_exponent = (UINT_TYPE)(adjusted_exponent + ExponentBias);
             UnionType u;
             u.f_val = F_ZERO; // to silence the compiler of unassigned ui_val member
-            u.ui_val = sign_value | (raw_exponent << ExponentShift) | (mantissa & MantissaBits);
+            u.ui_val = sign_value | (raw_exponent << NumMantissaBits) | (mantissa & MantissaBits);
 
             dest = u.f_val;
         }
@@ -190,7 +190,7 @@ namespace TestFloatPointViewerCSharp
             Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
             Console.WriteLine("Sign:{0}, Adjusted Exponent:{1}, Mantissa:{2}, Float Point Value:{3:G9}\n", 
-                sign, adjusted_exponent, Convert2Binary(mantissa, ExponentShift), m_FValue);
+                sign, adjusted_exponent, Convert2Binary(mantissa, NumMantissaBits), m_FValue);
         }
 
     }
