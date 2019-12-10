@@ -48,58 +48,58 @@ public:
 		m_FValue = val;
 	}
 
-	static void Get(FLOAT_TYPE src, Sign& sign, UINT_TYPE& raw_exponent, INT_TYPE& computed_exponent, UINT_TYPE& mantissa)
+	static void Get(FLOAT_TYPE src, Sign& sign, UINT_TYPE& raw_exponent, INT_TYPE& adjusted_exponent, UINT_TYPE& mantissa)
 	{
 		UnionType u;
 		u.f_val = src;
 		sign = (u.ui_val & SignBit) ? Sign::Negative : Sign::Positive;
 		raw_exponent = (u.ui_val & ExponentBits) >> ExponentShift;
-		computed_exponent = raw_exponent - ExponentBias;
+		adjusted_exponent = raw_exponent - ExponentBias;
 		mantissa = (u.ui_val & MantissaBits);
 	}
 
-	static void Set(FLOAT_TYPE& dest, Sign sign, INT_TYPE computed_exponent, UINT_TYPE mantissa)
+	static void Set(FLOAT_TYPE& dest, Sign sign, INT_TYPE adjusted_exponent, UINT_TYPE mantissa)
 	{
 		UINT_TYPE sign_value = U_ZERO;
 		if (sign == Sign::Negative)
 			sign_value |= SignBit;
 
-		UINT_TYPE raw_exponent = (computed_exponent + ExponentBias);
+		UINT_TYPE raw_exponent = (adjusted_exponent + ExponentBias);
 		UnionType u;
 		u.ui_val = sign_value | (raw_exponent << ExponentShift) | (mantissa & MantissaBits);
 
 		dest = u.f_val;
 	}
 
-	Sign GetSigned() const
+	Sign GetSign() const
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
 		return sign;
 	}
 
-	void SetSigned(Sign new_sign)
+	void SetSign(Sign new_sign)
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
-		Set(m_FValue, new_sign, computed_exponent, mantissa);
+		Set(m_FValue, new_sign, adjusted_exponent, mantissa);
 	}
 
 	UINT_TYPE GetRawExponent() const
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
 		return raw_exponent;
 	}
@@ -108,43 +108,43 @@ public:
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
-		INT_TYPE new_computed_exponent = (INT_TYPE)(new_raw_exponent) -(INT_TYPE)(ExponentBias);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
+		INT_TYPE new_adjusted_exponent = (INT_TYPE)(new_raw_exponent) -(INT_TYPE)(ExponentBias);
 
-		Set(m_FValue, sign, new_computed_exponent, mantissa);
+		Set(m_FValue, sign, new_adjusted_exponent, mantissa);
 	}
 
-	INT_TYPE GetComputedExponent() const
+	INT_TYPE GetAdjustedExponent() const
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
-		return computed_exponent;
+		return adjusted_exponent;
 	}
 
-	void SetComputedExponent(INT_TYPE new_computed_exponent)
+	void SetAdjustedExponent(INT_TYPE new_adjusted_exponent)
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
-		Set(m_FValue, sign, new_computed_exponent, mantissa);
+		Set(m_FValue, sign, new_adjusted_exponent, mantissa);
 	}
 
 	UINT_TYPE GetMantissa() const
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
 		return mantissa;
 	}
@@ -153,11 +153,11 @@ public:
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
-		Set(m_FValue, sign, computed_exponent, new_mantissa);
+		Set(m_FValue, sign, adjusted_exponent, new_mantissa);
 	}
 
 	std::string Convert2Binary(UINT_TYPE value, int num_of_bits)
@@ -179,13 +179,13 @@ public:
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
-		INT_TYPE computed_exponent = S_ZERO;
+		INT_TYPE adjusted_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
 
-		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
+		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
 		std::cout << "Sign:" << (sign == Sign::Negative) << ", ";
-		std::cout << "Computed Exponent:" << computed_exponent << ", ";
+		std::cout << "Adjusted Exponent:" << adjusted_exponent << ", ";
 		std::cout << "Mantissa:" << Convert2Binary(mantissa, ExponentShift) << ", ";
 		std::cout << "Float Point Value:" << std::setprecision(9) << m_FValue << "\n";
 	}

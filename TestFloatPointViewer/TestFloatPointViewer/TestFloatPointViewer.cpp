@@ -11,7 +11,7 @@ int main()
 
     //d.Display();
 
-    //d.SetSigned(DoubleDissecter::Sign::Negative);
+    //d.SetSign(DoubleDissecter::Sign::Negative);
     d.SetMantissa(1);
 
 	d.Display();

@@ -51,24 +51,24 @@ namespace TestFloatPointViewerCSharp
             m_FValue = val;
         }
 
-        public static void Get(FLOAT_TYPE src, out Sign sign, out UINT_TYPE raw_exponent, out INT_TYPE computed_exponent, out UINT_TYPE mantissa)
+        public static void Get(FLOAT_TYPE src, out Sign sign, out UINT_TYPE raw_exponent, out INT_TYPE adjusted_exponent, out UINT_TYPE mantissa)
         {
             UnionType u;
             u.ui_val = 0; // to silence the compiler of unassigned ui_val member
             u.f_val = src;
             sign = ((u.ui_val & SignBit) > 0) ? Sign.Negative : Sign.Positive;
             raw_exponent = (u.ui_val & ExponentBits) >> ExponentShift;
-            computed_exponent = (INT_TYPE)raw_exponent - (INT_TYPE)ExponentBias;
+            adjusted_exponent = (INT_TYPE)raw_exponent - (INT_TYPE)ExponentBias;
             mantissa = (u.ui_val & MantissaBits);
         }
 
-        public static void Set(out FLOAT_TYPE dest, Sign sign, INT_TYPE computed_exponent, UINT_TYPE mantissa)
+        public static void Set(out FLOAT_TYPE dest, Sign sign, INT_TYPE adjusted_exponent, UINT_TYPE mantissa)
         {
             UINT_TYPE sign_value = U_ZERO;
             if (sign == Sign.Negative)
                 sign_value |= SignBit;
 
-            UINT_TYPE raw_exponent = (UINT_TYPE)(computed_exponent + ExponentBias);
+            UINT_TYPE raw_exponent = (UINT_TYPE)(adjusted_exponent + ExponentBias);
             UnionType u;
             u.f_val = F_ZERO; // to silence the compiler of unassigned ui_val member
             u.ui_val = sign_value | (raw_exponent << ExponentShift) | (mantissa & MantissaBits);
@@ -76,35 +76,35 @@ namespace TestFloatPointViewerCSharp
             dest = u.f_val;
         }
 
-        public Sign GetSigned()
+        public Sign GetSign()
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
             return sign;
         }
 
-        public void SetSigned(Sign new_sign)
+        public void SetSign(Sign new_sign)
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            Set(out m_FValue, new_sign, computed_exponent, mantissa);
+            Set(out m_FValue, new_sign, adjusted_exponent, mantissa);
         }
 
         public UINT_TYPE GetRawExponent()
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
             return raw_exponent;
         }
@@ -113,44 +113,44 @@ namespace TestFloatPointViewerCSharp
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
-            INT_TYPE new_computed_exponent = (INT_TYPE)(new_raw_exponent) - (INT_TYPE)(ExponentBias);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
+            INT_TYPE new_adjusted_exponent = (INT_TYPE)(new_raw_exponent) - (INT_TYPE)(ExponentBias);
 
-            Set(out m_FValue, sign, new_computed_exponent, mantissa);
+            Set(out m_FValue, sign, new_adjusted_exponent, mantissa);
         }
 
-        public INT_TYPE GetComputedExponent()
+        public INT_TYPE GetAdjustedExponent()
         {
 
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            return computed_exponent;
+            return adjusted_exponent;
         }
 
-        public void SetComputedExponent(INT_TYPE new_computed_exponent)
+        public void SetAdjustedExponent(INT_TYPE new_adjusted_exponent)
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            Set(out m_FValue, sign, new_computed_exponent, mantissa);
+            Set(out m_FValue, sign, new_adjusted_exponent, mantissa);
         }
 
         public UINT_TYPE GetMantissa()
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
             return mantissa;
         }
@@ -159,11 +159,11 @@ namespace TestFloatPointViewerCSharp
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            Set(out m_FValue, sign, computed_exponent, new_mantissa);
+            Set(out m_FValue, sign, adjusted_exponent, new_mantissa);
         }
 
         private string Convert2Binary(UINT_TYPE value, byte num_of_bits)
@@ -185,12 +185,12 @@ namespace TestFloatPointViewerCSharp
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;
-            INT_TYPE computed_exponent = S_ZERO;
+            INT_TYPE adjusted_exponent = S_ZERO;
             UINT_TYPE mantissa = U_ZERO;
-            Get(m_FValue, out sign, out raw_exponent, out computed_exponent, out mantissa);
+            Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            Console.WriteLine("Sign:{0}, Computed Exponent:{1}, Mantissa:{2}, Float Point Value:{3:G9}\n", 
-                sign, computed_exponent, Convert2Binary(mantissa, ExponentShift), m_FValue);
+            Console.WriteLine("Sign:{0}, Adjusted Exponent:{1}, Mantissa:{2}, Float Point Value:{3:G9}\n", 
+                sign, adjusted_exponent, Convert2Binary(mantissa, ExponentShift), m_FValue);
         }
 
     }
