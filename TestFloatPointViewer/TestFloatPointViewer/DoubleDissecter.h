@@ -175,6 +175,14 @@ public:
 		return str;
 	}
 
+	static std::string GetSignString(Sign sign)
+	{
+		if (sign == Sign::Negative)
+			return "Negative";
+
+		return "Positive";
+	}
+
 	void Display()
 	{
 		Sign sign = Sign::Positive;
@@ -184,7 +192,7 @@ public:
 
 		Get(m_FValue, sign, raw_exponent, adjusted_exponent, mantissa);
 
-		std::cout << "Sign:" << (sign == Sign::Negative) << ", ";
+		std::cout << "Sign:" << GetSignString(sign) << ", ";
 		std::cout << "Adjusted Exponent:" << adjusted_exponent << ", ";
 		std::cout << "Mantissa:" << Convert2Binary(mantissa, NumMantissaBits) << ", ";
 		std::cout << "Float Point Value:" << std::setprecision(15) << m_FValue << "\n";
