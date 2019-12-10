@@ -21,10 +21,11 @@ private:
 	static constexpr UINT_TYPE SignBit = 0x8000000000000000; // MSB is sign bit
 	static constexpr UINT_TYPE ExponentBits = 0x7FF0000000000000; // 11 bits of exponent
 	static constexpr UINT_TYPE MantissaBits = 0xFFFFFFFFFFFFF; // 52 bits of mantissa
-	static constexpr UINT_TYPE ExponentShift = 52;
-	static constexpr UINT_TYPE ExponentBias = 1023;
+	static constexpr UINT_TYPE ExponentShift = 52UL;
+	static constexpr UINT_TYPE ExponentBias = 1023UL;
 	static constexpr UINT_TYPE U_ZERO = 0UL;
 	static constexpr INT_TYPE S_ZERO = 0L;
+	static constexpr UINT_TYPE U_ONE = 1UL;
 	union UnionType
 	{
 		FLOAT_TYPE f_val;
@@ -62,6 +63,7 @@ public:
 			sign_value |= SignBit;
 
 		UINT_TYPE raw_exponent = (computed_exponent + ExponentBias);
+		UINT_TYPE new_man = mantissa & MantissaBits;
 		UnionType u;
 		u.ui_val = sign_value | (raw_exponent << ExponentShift) | (mantissa & MantissaBits);
 
@@ -160,9 +162,11 @@ public:
 	std::string Convert2Binary(UINT_TYPE value, int num_of_bits)
 	{
 		std::string str = "";
-		for (int i = num_of_bits; i > 0; --i)
+		UINT_TYPE mask = (U_ONE << num_of_bits);
+		for (int i = 0; i < num_of_bits; ++i)
 		{
-			if (value & i)
+			mask >>= 1;
+			if (value & mask)
 				str += "1";
 			else
 				str += "0";

@@ -6,12 +6,13 @@
 
 int main()
 {
-    DoubleDissecter::FLOAT_TYPE value = 0.5f;
-    DoubleDissecter d(value);
+    FloatDissecter::FLOAT_TYPE value = 0.5f;
+    FloatDissecter d(value);
 
-    d.Display();
+    //d.Display();
 
-    d.SetSigned(DoubleDissecter::Sign::Negative);
+    //d.SetSigned(DoubleDissecter::Sign::Negative);
+    d.SetMantissa(1);
 
 	d.Display();
 
