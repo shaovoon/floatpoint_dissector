@@ -16,5 +16,5 @@ int main()
 
 	d.Display();
 
-    std::cout << "Hello World!\n";
+    std::cout << "Done!\n";
 }

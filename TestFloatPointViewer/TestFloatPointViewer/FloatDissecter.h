@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cstdint>
 
@@ -110,7 +111,7 @@ public:
 		INT_TYPE computed_exponent = S_ZERO;
 		UINT_TYPE mantissa = U_ZERO;
 		Get(m_FValue, sign, raw_exponent, computed_exponent, mantissa);
-		UINT_TYPE new_computed_exponent = new_raw_exponent - ExponentBias;
+		INT_TYPE new_computed_exponent = (INT_TYPE)(new_raw_exponent) -(INT_TYPE)(ExponentBias);
 
 		Set(m_FValue, sign, new_computed_exponent, mantissa);
 	}
@@ -186,7 +187,7 @@ public:
 		std::cout << "Sign:" << (sign == Sign::Negative) << ", ";
 		std::cout << "Computed Exponent:" << computed_exponent << ", ";
 		std::cout << "Mantissa:" << Convert2Binary(mantissa, ExponentShift) << ", ";
-		std::cout << "Float Point Value:" << m_FValue << "\n";
+		std::cout << "Float Point Value:" << std::setprecision(9) << m_FValue << "\n";
 	}
 
 private:
