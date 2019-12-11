@@ -18,17 +18,18 @@ public:
 		Negative
 	};
 
+public:
+	static constexpr const UINT_TYPE SignBit = 0x8000000000000000; // MSB is sign bit
+	static constexpr const UINT_TYPE ExponentBits = 0x7FF0000000000000; // 11 bits of exponent
+	static constexpr const UINT_TYPE MantissaBits = 0xFFFFFFFFFFFFF; // 52 bits of mantissa
+	static constexpr const UINT_TYPE NumMantissaBits = 52UL;
+	static constexpr const UINT_TYPE ExponentBias = 1023UL;
 private:
-	static constexpr UINT_TYPE SignBit = 0x8000000000000000; // MSB is sign bit
-	static constexpr UINT_TYPE ExponentBits = 0x7FF0000000000000; // 11 bits of exponent
-	static constexpr UINT_TYPE MantissaBits = 0xFFFFFFFFFFFFF; // 52 bits of mantissa
-	static constexpr UINT_TYPE NumMantissaBits = 52UL;
-	static constexpr UINT_TYPE ExponentBias = 1023UL;
-	static constexpr UINT_TYPE U_ZERO = 0UL;
-	static constexpr INT_TYPE S_ZERO = 0L;
-	static constexpr UINT_TYPE U_ONE = 1UL;
+	static constexpr const UINT_TYPE U_ZERO = 0UL;
+	static constexpr const INT_TYPE S_ZERO = 0L;
+	static constexpr const UINT_TYPE U_ONE = 1UL;
 
-	static constexpr UINT_TYPE MaxRawExponent = 2047U;
+	static constexpr const UINT_TYPE MaxRawExponent = 2047U;
 
 	union UnionType
 	{

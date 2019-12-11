@@ -10,12 +10,12 @@ namespace TestFloatPointViewerCSharp
 
             d.SetNaN(DoubleDissecter.Sign.Positive, 2);
 
-            Console.WriteLine("IsNaN:{0}\n", d.IsNaN());
-            Console.WriteLine("IsZero:{0}\n", d.IsZero());
-            Console.WriteLine("IsInfinity:{0}\n", d.IsInfinity());
-            Console.WriteLine("IsPositiveInfinity:{0}\n", d.IsPositiveInfinity());
-            Console.WriteLine("IsNegativeInfinity:{0}\n", d.IsNegativeInfinity());
-            Console.WriteLine("IsNaN:{0}\n", double.IsNaN(d.GetFloatPoint()));
+            Console.WriteLine("IsNaN:{0}", d.IsNaN());
+            Console.WriteLine("IsZero:{0}", d.IsZero());
+            Console.WriteLine("IsInfinity:{0}", d.IsInfinity());
+            Console.WriteLine("IsPositiveInfinity:{0}", d.IsPositiveInfinity());
+            Console.WriteLine("IsNegativeInfinity:{0}", d.IsNegativeInfinity());
+            Console.WriteLine("IsNaN:{0}", double.IsNaN(d.GetFloatPoint()));
 
             Console.WriteLine("Done!");
         }

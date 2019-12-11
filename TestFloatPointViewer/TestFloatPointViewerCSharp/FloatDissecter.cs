@@ -17,11 +17,11 @@ namespace TestFloatPointViewerCSharp
             Negative
         }
 
-        private static readonly UINT_TYPE SignBit = 0x80000000; // MSB is sign bit
-        private static readonly UINT_TYPE ExponentBits = 0x7F800000; // 8 bits of exponent
-        private static readonly UINT_TYPE MantissaBits = 0x7FFFFF; // 23 bits of mantissa
-        private static readonly byte NumMantissaBits = 23;
-        private static readonly UINT_TYPE ExponentBias = 127U;
+        public static readonly UINT_TYPE SignBit = 0x80000000; // MSB is sign bit
+        public static readonly UINT_TYPE ExponentBits = 0x7F800000; // 8 bits of exponent
+        public static readonly UINT_TYPE MantissaBits = 0x7FFFFF; // 23 bits of mantissa
+        public static readonly byte NumMantissaBits = 23;
+        public static readonly UINT_TYPE ExponentBias = 127U;
         private static readonly UINT_TYPE U_ZERO = 0U;
         private static readonly INT_TYPE S_ZERO = 0;
         private static readonly UINT_TYPE U_ONE = 1U;
