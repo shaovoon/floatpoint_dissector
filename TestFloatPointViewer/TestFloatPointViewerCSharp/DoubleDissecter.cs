@@ -208,7 +208,7 @@ namespace TestFloatPointViewerCSharp
             return (raw_exponent == MaxRawExponent) && (sign == Sign.Negative) && (mantissa == U_ZERO);
         }
 
-        public bool IsDenormalised()
+        public bool IsSubnormal()
         {
             Sign sign = Sign.Positive;
             UINT_TYPE raw_exponent = U_ZERO;

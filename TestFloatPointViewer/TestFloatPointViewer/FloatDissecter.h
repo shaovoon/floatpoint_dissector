@@ -204,7 +204,7 @@ public:
 		return (raw_exponent == MaxRawExponent) && (sign == Sign::Negative) && (mantissa == U_ZERO);
 	}
 
-	bool IsDenormalised() const
+	bool IsSubnormal() const
 	{
 		Sign sign = Sign::Positive;
 		UINT_TYPE raw_exponent = U_ZERO;
