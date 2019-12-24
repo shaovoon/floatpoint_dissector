@@ -23,6 +23,7 @@ public:
 	static constexpr const UINT_TYPE ExponentBits = 0x7FF0000000000000; // 11 bits of exponent
 	static constexpr const UINT_TYPE MantissaBits = 0xFFFFFFFFFFFFF; // 52 bits of mantissa
 	static constexpr const UINT_TYPE NumMantissaBits = 52UL;
+	static constexpr const UINT_TYPE NumExponentBits = 11UL;
 	static constexpr const UINT_TYPE ExponentBias = 1023UL;
 private:
 	static constexpr const UINT_TYPE U_ZERO = 0UL;
@@ -256,11 +257,11 @@ public:
 		Set(m_FValue, new_sign, adjusted_exponent, mantissa);
 	}
 
-	std::string Convert2Binary(UINT_TYPE value, int num_of_bits)
+	std::string Convert2Binary(UINT_TYPE value, INT_TYPE num_of_bits)
 	{
 		std::string str = "";
 		UINT_TYPE mask = (U_ONE << num_of_bits);
-		for (int i = 0; i < num_of_bits; ++i)
+		for (INT_TYPE i = 0; i < num_of_bits; ++i)
 		{
 			mask >>= 1;
 			if (value & mask)
@@ -290,6 +291,7 @@ public:
 
 		std::cout << "Sign:" << GetSignString(sign) << ", ";
 		std::cout << "Adjusted Exponent:" << adjusted_exponent << ", ";
+		std::cout << "Raw Exponent:" << Convert2Binary(raw_exponent, NumExponentBits) << ", ";
 		std::cout << "Mantissa:" << Convert2Binary(mantissa, NumMantissaBits) << ", ";
 		std::cout << "Float Point Value:" << std::setprecision(15) << m_FValue << "\n";
 	}

@@ -21,6 +21,7 @@ namespace TestFloatPointViewerCSharp
         public static readonly UINT_TYPE ExponentBits = 0x7F800000; // 8 bits of exponent
         public static readonly UINT_TYPE MantissaBits = 0x7FFFFF; // 23 bits of mantissa
         public static readonly byte NumMantissaBits = 23;
+        public static readonly byte NumExponentBits = 8;
         public static readonly UINT_TYPE ExponentBias = 127U;
         private static readonly UINT_TYPE U_ZERO = 0U;
         private static readonly INT_TYPE S_ZERO = 0;
@@ -282,8 +283,8 @@ namespace TestFloatPointViewerCSharp
             UINT_TYPE mantissa = U_ZERO;
             Get(m_FValue, out sign, out raw_exponent, out adjusted_exponent, out mantissa);
 
-            Console.WriteLine("Sign:{0}, Adjusted Exponent:{1}, Mantissa:{2}, Float Point Value:{3:G9}\n",
-                sign, adjusted_exponent, Convert2Binary(mantissa, NumMantissaBits), m_FValue);
+            Console.WriteLine("Sign:{0}, Adjusted Exponent:{1}, Raw Exponent:{2}, Mantissa:{3}, Float Point Value:{4:G9}\n",
+                sign, adjusted_exponent, Convert2Binary(raw_exponent, NumExponentBits), Convert2Binary(mantissa, NumMantissaBits), m_FValue);
         }
 
     }
