@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FloatDissecter.h">
+    <ClInclude Include="FloatDissector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoubleDissecter.h">
+    <ClInclude Include="DoubleDissector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

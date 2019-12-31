@@ -150,8 +150,8 @@
     <ClCompile Include="TestFloatPointViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DoubleDissecter.h" />
-    <ClInclude Include="FloatDissecter.h" />
+    <ClInclude Include="DoubleDissector.h" />
+    <ClInclude Include="FloatDissector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

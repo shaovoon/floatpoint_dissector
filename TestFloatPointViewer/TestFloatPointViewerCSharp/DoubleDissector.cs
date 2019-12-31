@@ -8,7 +8,7 @@ using INT_TYPE = System.Int64;
 
 namespace TestFloatPointViewerCSharp
 {
-    class DoubleDissecter
+    class DoubleDissector
     {
         public enum Sign
         {
@@ -41,7 +41,7 @@ namespace TestFloatPointViewerCSharp
             public UINT_TYPE ui_val;
         }
 
-        public DoubleDissecter(FLOAT_TYPE val) { m_FValue = val; }
+        public DoubleDissector(FLOAT_TYPE val) { m_FValue = val; }
 
         public FLOAT_TYPE GetFloatPoint()
         {

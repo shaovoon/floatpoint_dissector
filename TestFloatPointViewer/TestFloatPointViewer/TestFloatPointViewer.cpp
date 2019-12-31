@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "FloatDissecter.h"
-#include "DoubleDissecter.h"
+#include "FloatDissector.h"
+#include "DoubleDissector.h"
 
 
 int main()
 {
-    FloatDissecter::FLOAT_TYPE value = 0.0f;
-    FloatDissecter d(value);
+    FloatDissector::FLOAT_TYPE value = 0.0f;
+    FloatDissector d(value);
 
-	d.SetNaN(FloatDissecter::Sign::Positive, 2);
+	d.SetNaN(FloatDissector::Sign::Positive, 2);
 
 	std::cout << "IsNaN:" << d.IsNaN() << "\n";
 	std::cout << "IsZero:" << d.IsZero() << "\n";

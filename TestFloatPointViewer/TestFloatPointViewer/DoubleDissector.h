@@ -5,7 +5,7 @@
 #include <cstdint>
 
 // Dissector for 64bit float
-class DoubleDissecter
+class DoubleDissector
 {
 public:
 	typedef double FLOAT_TYPE;
@@ -40,7 +40,7 @@ private:
 
 
 public:
-	DoubleDissecter(FLOAT_TYPE val) : m_FValue(val) {}
+	DoubleDissector(FLOAT_TYPE val) : m_FValue(val) {}
 
 	FLOAT_TYPE GetFloatPoint() const
 	{

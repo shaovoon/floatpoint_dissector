@@ -6,9 +6,9 @@ namespace TestFloatPointViewerCSharp
     {
         static void Main(string[] args)
         {
-            DoubleDissecter d = new DoubleDissecter(double.NegativeInfinity);
+            DoubleDissector d = new DoubleDissector(double.NegativeInfinity);
 
-            d.SetNaN(DoubleDissecter.Sign.Positive, 2);
+            d.SetNaN(DoubleDissector.Sign.Positive, 2);
 
             Console.WriteLine("IsNaN:{0}", d.IsNaN());
             Console.WriteLine("IsZero:{0}", d.IsZero());
