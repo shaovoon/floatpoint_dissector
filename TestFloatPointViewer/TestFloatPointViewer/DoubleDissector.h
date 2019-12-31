@@ -69,7 +69,6 @@ public:
 			sign_value |= SignBit;
 
 		UINT_TYPE raw_exponent = (adjusted_exponent + ExponentBias);
-		UINT_TYPE new_man = mantissa & MantissaBits;
 		UnionType u;
 		u.ui_val = sign_value | (raw_exponent << NumMantissaBits) | (mantissa & MantissaBits);
 
