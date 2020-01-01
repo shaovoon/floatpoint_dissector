@@ -1,3 +1,12 @@
+/*
+Floating-Point Dissector Library
+
+Copyright (c) 2020 Wong Shao Voon
+
+The Code Project Open License (CPOL)
+http://www.codeproject.com/info/cpol10.aspx
+*/
+
 #pragma once
 #include <iostream>
 #include <iomanip>
